@@ -22,19 +22,12 @@ class TweetsController < ApplicationController
 
   # POST /tweets or /tweets.json
   def create
-    @tweet = Tweet.new(tweet_params)
-
     @attitude = Attitude.new(attitude_params)
+    @attitude.save!
     
-    respond_to do |format|
+    @tweet = Tweet.new(tweet_params)
     if @tweet.save! && @attitude.save!
-        format.html { redirect_to tweet_url(@tweet), notice: "Tweet was successfully created." }
-        format.json { render :show, status: :created, location: @tweet }
-      else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @tweet.errors, status: :unprocessable_entity }
-    
-      end
+      redirect_to root_path
     end
   end
 
@@ -69,7 +62,7 @@ class TweetsController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def tweet_params
-      params.require(:tweet).permit(:title, :content)
+      params.require(:tweet).permit(:title, :content,:attitude_id)
     end
 
     def attitude_params

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_02_22_043357) do
+ActiveRecord::Schema.define(version: 2023_02_22_055730) do
 
   create_table "active_storage_attachments", charset: "utf8mb4", force: :cascade do |t|
     t.string "name", null: false
@@ -180,6 +180,8 @@ ActiveRecord::Schema.define(version: 2023_02_22_043357) do
     t.text "content"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "attitude_id"
+    t.index ["attitude_id"], name: "index_tweets_on_attitude_id"
   end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
@@ -211,4 +213,5 @@ ActiveRecord::Schema.define(version: 2023_02_22_043357) do
   add_foreign_key "ondemand_searches", "ondemand_tags"
   add_foreign_key "ondemand_searches", "ondemands"
   add_foreign_key "ondemands", "users"
+  add_foreign_key "tweets", "attitudes"
 end
